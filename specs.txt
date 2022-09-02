@@ -1,0 +1,21 @@
+API SPECS
+    Auth: JWT
+
+    user:
+        register | login
+        cur user
+        get profile
+        update user
+        follow | un-follow
+
+    articles:
+        create, read, update, delete
+        list
+        feed
+        favorite | unfavorite
+
+    Comments
+        add | delete
+
+    Tags
+        get tags

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Navbar = () => {
   return (
     <nav className="navbar navbar-light">
@@ -8,7 +10,7 @@ const Navbar = () => {
         <ul className="nav navbar-nav pull-xs-right">
           <li className="nav-item">
             {/* <!-- Add "active" className when you're on that page" --> */}
-            <a className="nav-link active" href="">
+            <a className="nav-link active" href="./">
               Home
             </a>
           </li>
@@ -23,13 +25,13 @@ const Navbar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="">
-              Sign in
+            <a href="" className="nav-link">
+              <Link href={"/login"}>Sign in</Link>
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="">
-              Sign up
+            <a className="nav-link">
+              <Link href={"/register"}>Sign up</Link>
             </a>
           </li>
         </ul>

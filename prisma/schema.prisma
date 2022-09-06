@@ -7,9 +7,47 @@ generator client {
 
 datasource db {
     provider = "sqlite"
-    url      = env("DATABASE_URL")
+    url      = "file:./dev.db"
 }
 
 model Example {
     id String @id @default(cuid())
+}
+
+// type User struct {
+// 	gorm.Model
+// 	Username   string `gorm:"uniqueIndex;not nul"`
+// 	Email      string `gorm:"uniqueIndex;not null"`
+// 	Password   string `gorm:"not null"`
+// 	Bio        *string
+// 	Image      *string
+// 	Followers  []Follow  `gorm:"foreignKey:FollowingID"`
+// 	Followings []Follow  `gorm:"foreignKey:FollowerID"`
+// 	Favorites  []Article `gorm:"many2many:favorites;"`
+// }
+
+// type Follow struct {
+// 	Follower    User
+// 	FollowerID  uint `gorm:"primaryKey" sql:"type:int not null"`
+// 	Following   User
+// 	FollowingID uint `gorm:"primaryKey" sql:"type:int not null"`
+// }
+
+model User {
+    username  String    @unique
+    email     String    @unique
+    password  String
+    bio       String?   @default("New to conduit")
+    image     String?   @default("https://static.productionready.io/images/smiley-cyrus.jpg")
+    followers Follows[] @relation("follower")
+    following Follows[] @relation("following")
+}
+
+model Follows {
+    follower    User   @relation("follower", fields: [followerId], references: [username])
+    followerId  String
+    following   User   @relation("following", fields: [followingId], references: [username])
+    followingId String
+
+    @@id([followerId, followingId])
 }

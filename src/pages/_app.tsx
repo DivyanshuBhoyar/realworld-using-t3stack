@@ -23,7 +23,7 @@ const getBaseUrl = () => {
 };
 
 export default withTRPC<AppRouter>({
-  config() {
+  config({ ctx }) {
     /**
      * If you want to use SSR, you need to use the server's full URL
      * @link https://trpc.io/docs/ssr
@@ -31,6 +31,22 @@ export default withTRPC<AppRouter>({
     const url = `${getBaseUrl()}/api/trpc`;
 
     return {
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            staleTime: 800,
+          },
+        },
+      },
+      headers() {
+        if (ctx?.req) {
+          return {
+            ...ctx.req.headers,
+            "x-ssr": "1",
+          };
+        }
+        return {};
+      },
       links: [
         loggerLink({
           enabled: (opts) =>

@@ -37,8 +37,8 @@ model User {
     username  String    @unique
     email     String    @unique
     password  String
-    bio       String?   @default("New to conduit")
-    image     String?   @default("https://static.productionready.io/images/smiley-cyrus.jpg")
+    bio       String    @default("New to conduit")
+    image     String    @default("https://static.productionready.io/images/smiley-cyrus.jpg")
     followers Follows[] @relation("follower")
     following Follows[] @relation("following")
 }

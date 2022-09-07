@@ -1,10 +1,13 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useContext } from "react";
 import { useState } from "react";
+import { UserContextType } from "../@types/user";
+import { userContext } from "../context/userContext";
 import { trpc } from "../utils/trpc";
 
 const Login: NextPage = () => {
+  const { setIsAuth, setUser } = useContext(userContext) as UserContextType;
   const [vals, setVals] = useState({
     username: "",
     password: "",
@@ -22,6 +25,8 @@ const Login: NextPage = () => {
   const loginMutation = trpc.useMutation(["auth.login"], {
     onSuccess(data) {
       console.log("login success:", data);
+      setUser(data.user);
+      setIsAuth(true);
       router.push("/profile/" + data.user.username);
     },
     onError(err) {

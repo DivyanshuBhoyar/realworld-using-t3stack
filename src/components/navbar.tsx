@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { useContext } from "react";
+import { UserContextType } from "../@types/user";
+import { userContext } from "../context/userContext";
 
 const Navbar = () => {
+  const { isAuth } = useContext(userContext) as UserContextType;
+
   return (
     <nav className="navbar navbar-light">
       <div className="container">
@@ -24,16 +29,34 @@ const Navbar = () => {
               <i className="ion-gear-a"></i>&nbsp;Settings
             </a>
           </li>
-          <li className="nav-item">
-            <a href="" className="nav-link">
-              <Link href={"/login"}>Sign in</Link>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link">
-              <Link href={"/register"}>Sign up</Link>
-            </a>
-          </li>
+          {isAuth ? (
+            <>
+              <li className="nav-item">
+                <span className="nav-link">
+                  <Link className="nav-link" href="/login">
+                    Sign out
+                  </Link>
+                </span>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="nav-item">
+                <span className="nav-link">
+                  <Link className="nav-link" href="/login">
+                    Sign in
+                  </Link>
+                </span>
+              </li>
+              <li className="nav-item">
+                <span className="nav-link">
+                  <Link className="nav-link" href="/register">
+                    Sign up
+                  </Link>
+                </span>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </nav>
